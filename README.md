@@ -1,6 +1,6 @@
 ![plentymarkets Logo](http://www.plentymarkets.eu/layout/pm/images/logo/plentymarkets-logo.jpg)
 
-# Export format tutorial plugin for plentymarkets 7
+# Export format plugin tutorial for plentymarkets 7
 
 This is a export format plugin tutorial developed by plentymarkets. Use this tutorial as an example to integrate a export format in plentymarkets for the elastic export.
 
