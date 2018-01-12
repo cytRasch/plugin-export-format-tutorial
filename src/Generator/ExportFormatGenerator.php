@@ -59,6 +59,7 @@ class ExportFormatGenerator extends CSVPluginGenerator
     {
         $this->elasticExportCoreHelper = pluginApp(ElasticExportCoreHelper::class);
         $this->elasticExportPriceHelper = pluginApp(ElasticExportPriceHelper::class);
+        $this->elasticExportStockHelper = pluginApp(ElasticExportStockHelper::class);
 
         /** @var KeyValue $settings */
 		$settings = $this->arrayHelper->buildMapFromObjectList($formatSettings, 'key', 'value');
@@ -67,21 +68,21 @@ class ExportFormatGenerator extends CSVPluginGenerator
 
 		// add header
 		$this->addCSVContent([
-            'Varianten-ID',
-            'Variantennummer',
+            'VariationID',
+            'VariationNo',
             'Model',
-            'Artikelname',
-            'Artikelbeschreibung',
-            'Bild',
-            'Marke',
-            'EAN',
-            'Währung',
-            'Versandkosten',
-            'Preis (UVP)',
-            'reduzierter Preis',
-            'Grundpreis',
-            'Grundpreis Einheit',
-            'Kategorien',
+            'ItemName',
+            'ItemDescription',
+            'Image',
+            'Brand',
+            'Barcode',
+            'Currency',
+            'ShippingCosts',
+            'RRP',
+            'Price',
+            'BasePrice',
+            'BasePriceUnit',
+            'Categories',
             'Link'
 		]);
 
@@ -170,21 +171,21 @@ class ExportFormatGenerator extends CSVPluginGenerator
 		}
 
 		$data = [
-			'Varianten-ID' => $variation['id'],
-			'Variantennummer' => $variation['data']['variation']['number'],
+			'VariationID' => $variation['id'],
+			'VariationNo' => $variation['data']['variation']['number'],
 			'Model' => $variation['data']['variation']['model'],
-			'Artikelname' => $this->elasticExportCoreHelper->getName($variation, $settings, 256),
-			'Artikelbeschreibung' => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings, 256),
-			'Bild' => $this->elasticExportCoreHelper->getMainImage($variation, $settings),
-			'Marke' => $this->elasticExportCoreHelper->getExternalManufacturerName((int)$variation['data']['item']['manufacturer']['id']),
-			'EAN' => $this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')),
-			'Währung' => $priceList['currency'],
-			'Versandkosten' => $deliveryCost,
-			'Preis (UVP)' => $rrp,
-			'reduzierter Preis' => $price,
-			'Grundpreis' => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
-			'Grundpreis Einheit' => $basePriceList['lot'],
-			'Kategorien' => $this->getCategories($variation, $settings),
+			'ItemName' => $this->elasticExportCoreHelper->getName($variation, $settings, 256),
+			'ItemDescription' => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings, 256),
+			'Image' => $this->elasticExportCoreHelper->getMainImage($variation, $settings),
+			'Brand' => $this->elasticExportCoreHelper->getExternalManufacturerName((int)$variation['data']['item']['manufacturer']['id']),
+			'Barcode' => $this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')),
+			'Currency' => $priceList['currency'],
+			'ShippingCosts' => $deliveryCost,
+			'RRP' => $rrp,
+			'Price' => $price,
+			'BasePrice' => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
+			'BasePriceUnit' => $basePriceList['lot'],
+			'Categories' => $this->getCategories($variation, $settings),
 			'Link' => $this->elasticExportCoreHelper->getMutatedUrl($variation, $settings),
 		];
 
