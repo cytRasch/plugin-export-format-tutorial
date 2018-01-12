@@ -33,7 +33,7 @@ class ExportFormatGenerator extends CSVPluginGenerator
 	 * @var ElasticExportStockHelper $elasticExportStockHelper
 	 */
     private $elasticExportStockHelper;
-
+    
     /**
      * @var ArrayHelper $arrayHelper
      */
@@ -71,8 +71,8 @@ class ExportFormatGenerator extends CSVPluginGenerator
             'VariationID',
             'VariationNo',
             'Model',
-            'ItemName',
-            'ItemDescription',
+            'Name',
+            'Description',
             'Image',
             'Brand',
             'Barcode',
@@ -82,7 +82,6 @@ class ExportFormatGenerator extends CSVPluginGenerator
             'Price',
             'BasePrice',
             'BasePriceUnit',
-            'Categories',
             'Link'
 		]);
 
@@ -174,9 +173,9 @@ class ExportFormatGenerator extends CSVPluginGenerator
 			'VariationID' => $variation['id'],
 			'VariationNo' => $variation['data']['variation']['number'],
 			'Model' => $variation['data']['variation']['model'],
-			'ItemName' => $this->elasticExportCoreHelper->getName($variation, $settings, 256),
-			'ItemDescription' => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings, 256),
-			'Image' => $this->elasticExportCoreHelper->getMainImage($variation, $settings),
+			'Name' => $this->elasticExportCoreHelper->getMutatedName($variation, $settings, 256),
+			'Description' => $this->elasticExportCoreHelper->getMutatedDescription($variation, $settings, 256),
+			'Image' => $this->elasticExportCoreHelper->getImageListInOrder($variation, $settings, 1, ElasticExportCoreHelper::ALL_IMAGES),
 			'Brand' => $this->elasticExportCoreHelper->getExternalManufacturerName((int)$variation['data']['item']['manufacturer']['id']),
 			'Barcode' => $this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')),
 			'Currency' => $priceList['currency'],
@@ -185,41 +184,9 @@ class ExportFormatGenerator extends CSVPluginGenerator
 			'Price' => $price,
 			'BasePrice' => $this->elasticExportPriceHelper->getBasePrice($variation, $priceList['price'], $settings->get('lang'), '/', false, false, $priceList['currency']),
 			'BasePriceUnit' => $basePriceList['lot'],
-			'Categories' => $this->getCategories($variation, $settings),
 			'Link' => $this->elasticExportCoreHelper->getMutatedUrl($variation, $settings),
 		];
 
 		$this->addCSVContent(array_values($data));
 	}
-
-    /**
-     * Get list of categories.
-     *
-     * @param  array    $variation
-     * @param  KeyValue $settings
-     * @return string
-     */
-    private function getCategories($variation, KeyValue $settings):string
-    {
-        $categoryList = [];
-
-        if(is_array($variation['data']['ids']['categories']['all']) && count($variation['data']['categories']['all']) > 0)
-        {
-			// go though the list of the category details
-			foreach($variation['data']['ids']['categories']['all'] as $category)
-			{
-				// pass the category id to construct the category path
-				$category = $this->elasticExportCoreHelper->getCategory((int)$category['id'], $settings->get('lang'), $settings->get('plentyId'));
-
-				if(strlen($category))
-				{
-					$categoryList[] = $category;
-				}
-			}
-
-			return implode(';', $categoryList);
-		}
-
-		return '';
-    }
 }
