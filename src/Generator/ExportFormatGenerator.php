@@ -1,6 +1,6 @@
 <?php
 
-namespace ExportFormatPluginTutorial\Generator;
+namespace PluginExportFormatTutorial\Generator;
 
 use ElasticExport\Helper\ElasticExportCoreHelper;
 use ElasticExport\Helper\ElasticExportPriceHelper;
@@ -13,7 +13,7 @@ use Plenty\Plugin\Log\Loggable;
 
 /**
  * Class ExportFormatGenerator
- * @package ExportFormatPluginTutorial\Generator
+ * @package PluginExportFormatTutorial\Generator
  */
 class ExportFormatGenerator extends CSVPluginGenerator
 {
@@ -121,7 +121,7 @@ class ExportFormatGenerator extends CSVPluginGenerator
 						}
 						catch(\Throwable $exception)
 						{
-							$this->getLogger('ExportFormatPluginTutorial')->logException($exception);
+							$this->getLogger('PluginExportFormatTutorial')->logException($exception);
 						}
 						
 						$lines++;

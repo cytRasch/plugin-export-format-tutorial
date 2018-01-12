@@ -1,6 +1,6 @@
 <?php
 
-namespace ExportFormatPluginTutorial\ResultField;
+namespace PluginExportFormatTutorial\ResultField;
 
 use Plenty\Modules\Cloud\ElasticSearch\Lib\Source\Mutator\BuiltIn\LanguageMutator;
 use Plenty\Modules\DataExchange\Contracts\ResultFields;
@@ -12,11 +12,11 @@ use Plenty\Modules\Helper\Models\KeyValue;
 
 /**
  * Class ExportFormatResultFields
- * @package ExportFormatPluginTutorial\ResultField
+ * @package PluginExportFormatTutorial\ResultField
  */
 class ExportFormatResultFields extends ResultFields
 {
-    const SCHUHE_DE = 141.00;
+    const DEFAULT_MARKET_REFERENCE = 100.00;
 
     /**
      * @var ArrayHelper
@@ -42,7 +42,7 @@ class ExportFormatResultFields extends ResultFields
     {
         /** @var KeyValue $settings */
         $settings = $this->arrayHelper->buildMapFromObjectList($formatSettings, 'key', 'value');
-        $reference = $settings->get('referrerId') ? $settings->get('referrerId') : self::SCHUHE_DE;
+        $reference = $settings->get('referrerId') ? $settings->get('referrerId') : self::DEFAULT_MARKET_REFERENCE;
 
         $this->setOrderByList(['variation.itemId', 'ASC']);
 

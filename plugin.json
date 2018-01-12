@@ -1,6 +1,6 @@
 {
-  "name": "ExportFormatPluginTutorial",
-  "namespace": "ExportFormatPluginTutorial",
+  "name": "PluginExportFormatTutorial",
+  "namespace": "PluginExportFormatTutorial",
   "type": "export",
   "version": "1.0.0",
   "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3, 19 November 2007",
@@ -23,7 +23,7 @@
   ],
   "author": "plentymarkets GmbH",
   "authorIcon": "icon_author_xs.png",
-  "serviceProvider": "ExportFormatPluginTutorial\\ExportFormatServiceProvider",
+  "serviceProvider": "PluginExportFormatTutorial\\ExportFormatServiceProvider",
   "keywords": [
     "plugin", 
     "export", 

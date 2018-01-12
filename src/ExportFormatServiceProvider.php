@@ -1,15 +1,15 @@
 <?php
 
-namespace ExportFormatPluginTutorial;
+namespace PluginExportFormatTutorial;
 
 use Plenty\Modules\DataExchange\Services\ExportPresetContainer;
-use Plenty\Plugin\DataExchangeServiceProvider;
+use Plenty\Plugin\ServiceProvider;
 
 /**
  * Class ExportFormatServiceProvider
- * @package ExportFormatPluginTutorial
+ * @package PluginExportFormatTutorial
  */
-class ExportFormatServiceProvider extends DataExchangeServiceProvider
+class ExportFormatServiceProvider extends ServiceProvider
 {
     /**
      * Abstract function for registering the service provider.
@@ -24,15 +24,16 @@ class ExportFormatServiceProvider extends DataExchangeServiceProvider
      *
      * @param ExportPresetContainer $container
      */
-    public function exports(ExportPresetContainer $container)
+    public function boot(ExportPresetContainer $container)
     {
         $container->add(
             'ExportFormat',
-            'ExportFormatPluginTutorial\ResultField\ExportFormatResultFields',
-            'ExportFormatPluginTutorial\Generator\ExportFormatGenerator',
+            'PluginExportFormatTutorial\ResultField\ExportFormatResultFields',
+            'PluginExportFormatTutorial\Generator\ExportFormatGenerator',
             '',
             true,
-			true
+			true,
+            'item'
         );
     }
 }
