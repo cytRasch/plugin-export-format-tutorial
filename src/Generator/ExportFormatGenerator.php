@@ -5,6 +5,7 @@ namespace PluginExportFormatTutorial\Generator;
 use ElasticExport\Helper\ElasticExportCoreHelper;
 use ElasticExport\Helper\ElasticExportPriceHelper;
 use ElasticExport\Helper\ElasticExportStockHelper;
+use ElasticExport\Services\FiltrationService;
 use Plenty\Modules\DataExchange\Contracts\CSVPluginGenerator;
 use Plenty\Modules\Helper\Services\ArrayHelper;
 use Plenty\Modules\Helper\Models\KeyValue;
@@ -29,15 +30,15 @@ class ExportFormatGenerator extends CSVPluginGenerator
 	 */
     private $elasticExportPriceHelper;
 
-	/**
-	 * @var ElasticExportStockHelper $elasticExportStockHelper
-	 */
-    private $elasticExportStockHelper;
-    
     /**
      * @var ArrayHelper $arrayHelper
      */
     private $arrayHelper;
+
+    /**
+     * @var FiltrationService
+     */
+    private $filtrationService;
 
     /**
      * ExportFormatGenerator constructor.
@@ -59,10 +60,11 @@ class ExportFormatGenerator extends CSVPluginGenerator
     {
         $this->elasticExportCoreHelper = pluginApp(ElasticExportCoreHelper::class);
         $this->elasticExportPriceHelper = pluginApp(ElasticExportPriceHelper::class);
-        $this->elasticExportStockHelper = pluginApp(ElasticExportStockHelper::class);
 
         /** @var KeyValue $settings */
 		$settings = $this->arrayHelper->buildMapFromObjectList($formatSettings, 'key', 'value');
+		
+		$this->filtrationService = pluginApp(FiltrationService::class, [$settings, $filter]);
 
 		$this->setDelimiter(";");
 
@@ -109,8 +111,8 @@ class ExportFormatGenerator extends CSVPluginGenerator
 
 					if(is_array($resultList['documents']) && count($resultList['documents']) > 0)
 					{
-					    // filter manually for stock limitations
-						if($this->elasticExportStockHelper->isFilteredByStock($variation, $filter) === true)
+					    // we have to filter params, which we cannot filter by Elasticsearch
+						if($this->filtrationService->filter($variation))
 						{
 							continue;
 						}
