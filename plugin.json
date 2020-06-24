@@ -1,6 +1,6 @@
 {
   "name": "PluginExportFormatTutorial",
-  "namespace": "PluginExportFormatTutorial",
+  "namespace": "ElasticExportGoogleShopping",
   "type": "export",
   "version": "1.0.0",
   "license": "GNU AFFERO GENERAL PUBLIC LICENSE Version 3, 19 November 2007",
@@ -23,11 +23,11 @@
   ],
   "author": "plentymarkets GmbH",
   "authorIcon": "icon_author_xs.png",
-  "serviceProvider": "PluginExportFormatTutorial\\ExportFormatServiceProvider",
+  "serviceProvider": "ElasticExportGoogleShopping\\ExportFormatServiceProvider",
   "keywords": [
-    "plugin", 
-    "export", 
-    "format", 
+    "plugin",
+    "export",
+    "format",
     "tutorial"
   ]
 }
