@@ -5,7 +5,7 @@ namespace PluginExportFormatTutorial;
 use Plenty\Modules\DataExchange\Services\ExportPresetContainer;
 use Plenty\Plugin\DataExchangeServiceProvider;
 
-class PluginExportFormatTutorialServiceProvider extends DataExchangeServiceProvider
+class ExportFormatServiceProvider extends DataExchangeServiceProvider
 {
 	public function register()
 	{
