@@ -1,9 +1,9 @@
 <?php
 
-namespace ElasticExportGoogleShopping\Helper;
+namespace PluginExportFormatTutorial\Helper;
 
 use ElasticExport\Helper\ElasticExportPropertyHelper;
-use ElasticExportGoogleShopping\Generator\GoogleShopping;
+use PluginExportFormatTutorial\Generator\ExportFormat;
 use Plenty\Modules\Helper\Models\KeyValue;
 use Plenty\Modules\Item\Attribute\Contracts\AttributeRepositoryContract;
 use Plenty\Modules\Item\Attribute\Contracts\AttributeValueNameRepositoryContract;
@@ -61,12 +61,12 @@ class AttributeHelper
         $this->attributeValueRepositoryContract = $attributeValueRepositoryContract;
         $this->attributeValueNameRepositoryContract = $attributeValueNameRepositoryContract;
     }
-    
+
     public function setPropertyHelper()
 	{
 		$this->elasticExportPropertyHelper = pluginApp(ElasticExportPropertyHelper::class);
 	}
-    
+
     /**
      * Get variation attributes.
      *
@@ -101,7 +101,7 @@ class AttributeHelper
 
         foreach ($typeList as $type)
         {
-            $property = $this->elasticExportPropertyHelper->getProperty($variation, $type, GoogleShopping::GOOGLE_SHOPPING, $settings->get('lang'));
+            $property = $this->elasticExportPropertyHelper->getProperty($variation, $type, ExportFormat::GOOGLE_SHOPPING, $settings->get('lang'));
 
             if (strlen(trim($property)) > 0)
             {

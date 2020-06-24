@@ -1,6 +1,6 @@
 <?php
 
-namespace ElasticExportGoogleShopping\Generator;
+namespace PluginExportFormatTutorial\Generator;
 
 use ElasticExport\Helper\ElasticExportItemHelper;
 use ElasticExport\Helper\ElasticExportPriceHelper;
@@ -8,8 +8,8 @@ use ElasticExport\Helper\ElasticExportPropertyHelper;
 use ElasticExport\Helper\ElasticExportStockHelper;
 use ElasticExport\Services\FiltrationService;
 use ElasticExport\Services\PriceDetectionService;
-use ElasticExportGoogleShopping\Helper\AttributeHelper;
-use ElasticExportGoogleShopping\Helper\PriceHelper;
+use PluginExportFormatTutorial\Helper\AttributeHelper;
+use PluginExportFormatTutorial\Helper\PriceHelper;
 use Plenty\Legacy\Services\Item\Variation\DetectSalesPriceService;
 use Plenty\Modules\DataExchange\Contracts\CSVPluginGenerator;
 use Plenty\Modules\Helper\Services\ArrayHelper;
@@ -21,14 +21,14 @@ use Plenty\Modules\Item\Variation\Services\ExportPreloadValue\ExportPreloadValue
 use Plenty\Modules\Order\Currency\Contracts\CurrencyRepositoryContract;
 use Plenty\Modules\Order\Currency\Models\Currency;
 use Plenty\Plugin\Log\Loggable;
-use ElasticExportGoogleShopping\Helper\ImageHelper;
+use PluginExportFormatTutorial\Helper\ImageHelper;
 
 /**
  * Class GoogleShopping
  *
- * @package ElasticExportGoogleShopping\Generator
+ * @package PluginExportFormatTutorial\Generator
  */
-class GoogleShopping extends CSVPluginGenerator
+class ExportFormat extends CSVPluginGenerator
 {
     use Loggable;
 
@@ -96,7 +96,7 @@ class GoogleShopping extends CSVPluginGenerator
 	 * @var ElasticExportPropertyHelper $elasticExportPropertyHelper
 	 */
 	private $elasticExportPropertyHelper;
-	
+
 	/**
 	 * @var ImageHelper $imageHelper
 	 */
@@ -121,9 +121,9 @@ class GoogleShopping extends CSVPluginGenerator
      * @var VariationExportServiceContract
      */
 	private $variationExportService;
-	
-	/** 
-     * @var PriceDetectionService 
+
+	/**
+     * @var PriceDetectionService
      */
 	private $priceDetectionService;
 
@@ -166,14 +166,14 @@ class GoogleShopping extends CSVPluginGenerator
 		$this->priceDetectionService = pluginApp(PriceDetectionService::class);
 
 		$this->attributeHelper->setPropertyHelper();
-		
+
         $settings = $this->arrayHelper->buildMapFromObjectList($formatSettings, 'key', 'value');
 		$this->filtrationService = pluginApp(FiltrationService::class, ['settings' => $settings, 'filterSettings' => $filter]);
-        
+
         $this->setDelimiter("	"); // this is tab character!
 
 		$shardIterator = 0;
-		
+
 		// preload prices for comparison of the IDs of the list and a variation bulk
         $this->priceDetectionService->preload($settings);
 
@@ -184,7 +184,7 @@ class GoogleShopping extends CSVPluginGenerator
         if($elasticSearch instanceof VariationElasticSearchScrollRepositoryContract)
         {
         	$elasticSearch->setNumberOfDocumentsPerShard(250);
-        	
+
             $limitReached = false;
             $lines = 0;
             do
@@ -202,7 +202,7 @@ class GoogleShopping extends CSVPluginGenerator
 				{
 					$this->getLogger(__METHOD__)
                         ->addReference('failedShard', $shardIterator)
-                        ->error('ElasticExportGoogleShopping::log.esError', [
+                        ->error('PluginExportFormatTutorial::log.esError', [
                             'Error message' => $resultList['error'],
                         ]);
 				}
@@ -211,14 +211,14 @@ class GoogleShopping extends CSVPluginGenerator
 				{
                     $this->getLogger(__METHOD__)
                         ->addReference('total', (int)$resultList['total'])
-                        ->debug('ElasticExportGoogleShopping::logs.esResultAmount');
+                        ->debug('PluginExportFormatTutorial::logs.esResultAmount');
                 }
-                
+
                 $this->variationExportService->addPreloadTypes([
 //                    'VariationStock',
                     'VariationSalesPrice'
                 ]);
-				
+
                 // collection variation IDs
                 $preloadObjects = [];
                 foreach ($resultList['documents'] AS $variation) {
@@ -256,27 +256,27 @@ class GoogleShopping extends CSVPluginGenerator
 								'Error message ' => $throwable->getMessage(),
 								'Error line'    => $throwable->getLine(),
 								'VariationId'   => $variation['id']
-							]; 
-                        	
+							];
+
                         	$this->errorIterator++;
-                        	
+
                         	if($this->errorIterator == 100)
                         	{
-								$this->getLogger(__METHOD__)->error('ElasticExportGoogleShopping::logs.fillRowError', [
+								$this->getLogger(__METHOD__)->error('PluginExportFormatTutorial::logs.fillRowError', [
 									'error list'	=> $this->errorBatch['rowError']
 								]);
-								
+
 								$this->errorIterator = 0;
 							}
                         }
-                        $lines = $lines +1; 
+                        $lines = $lines +1;
                     }
                 }
             }while ($elasticSearch->hasNext());
 
 			if(is_array($this->errorBatch) && count($this->errorBatch['rowError']))
 			{
-				$this->getLogger(__METHOD__)->error('ElasticExportGoogleShopping::logs.fillRowError', [
+				$this->getLogger(__METHOD__)->error('PluginExportFormatTutorial::logs.fillRowError', [
 					'errorList'	=> $this->errorBatch['rowError']
 				]);
 
@@ -294,9 +294,9 @@ class GoogleShopping extends CSVPluginGenerator
         $variationAttributes = $this->attributeHelper->getVariationAttributes($variation, $settings);
 
         $preloadedPrices = (array)$this->variationExportService->getData('VariationSalesPrice', $variation['id']);
-        
+
         $salesPriceData = $this->priceDetectionService->getPriceByPreloadList($preloadedPrices, PriceDetectionService::SALES_PRICE);
-        
+
         if($salesPriceData['price'] > 0) {
         	$variationPrice = $this->elasticExportPriceHelper->convertPrice($salesPriceData['price'], $this->priceDetectionService->getCurrency(), $settings, 2, '.');
             $variationPrice = $variationPrice . ' ' . $this->priceDetectionService->getCurrency();
@@ -305,13 +305,13 @@ class GoogleShopping extends CSVPluginGenerator
         }
 
         $specialPriceData = $this->priceDetectionService->getPriceByPreloadList($preloadedPrices, PriceDetectionService::SPECIAL_PRICE);
-        
+
         if($specialPriceData['price'] > 0) {
 			$salePrice = $this->elasticExportPriceHelper->convertPrice($specialPriceData['price'], $this->priceDetectionService->getCurrency(), $settings, 2, '.');
         } else {
             $salePrice = '';
         }
-            
+
         // FIXME non save condition handling
         if($salePrice >= $variationPrice || $salePrice <= 0.00)
         {

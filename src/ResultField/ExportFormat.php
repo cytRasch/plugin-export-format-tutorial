@@ -1,6 +1,6 @@
 <?php
 
-namespace ElasticExportGoogleShopping\ResultField;
+namespace PluginExportFormatTutorial\ResultField;
 
 use Plenty\Modules\DataExchange\Contracts\ResultFields;
 use Plenty\Modules\DataExchange\Models\FormatSetting;
@@ -14,7 +14,7 @@ use Plenty\Modules\Item\Search\Mutators\DefaultCategoryMutator;
 use Plenty\Modules\Item\Search\Mutators\ImageDomainMutator;
 use Plenty\Modules\Cloud\ElasticSearch\Lib\ElasticSearch;
 
-class GoogleShopping extends ResultFields
+class ExportFormat extends ResultFields
 {
     const GOOGLE_SHOPPING = 7.00;
 
@@ -134,7 +134,7 @@ class GoogleShopping extends ResultFields
 		 * @var ImageDomainMutator $imageDomainMutator
 		 */
         $imageDomainMutator = pluginApp(ImageDomainMutator::class);
-        
+
         if($imageDomainMutator instanceof ImageDomainMutator)
         {
         	$imageDomainMutator->setClient($settings->get('plentyId'));

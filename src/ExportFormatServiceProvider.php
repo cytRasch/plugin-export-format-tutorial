@@ -1,11 +1,11 @@
 <?php
 
-namespace ElasticExportGoogleShopping;
+namespace PluginExportFormatTutorial;
 
 use Plenty\Modules\DataExchange\Services\ExportPresetContainer;
 use Plenty\Plugin\DataExchangeServiceProvider;
 
-class ElasticExportGoogleShoppingServiceProvider extends DataExchangeServiceProvider
+class PluginExportFormatTutorialServiceProvider extends DataExchangeServiceProvider
 {
 	public function register()
 	{
@@ -14,9 +14,9 @@ class ElasticExportGoogleShoppingServiceProvider extends DataExchangeServiceProv
 	public function exports(ExportPresetContainer $container)
 	{
 		$container->add(
-			'GoogleShopping-Plugin',
-			'ElasticExportGoogleShopping\ResultField\GoogleShopping',
-			'ElasticExportGoogleShopping\Generator\GoogleShopping',
+			'ExportFormat',
+            'PluginExportFormatTutorial\ResultField\ExportFormat',
+            'PluginExportFormatTutorial\Generator\ExportFormat',
             '',
 			true,
             true
