@@ -266,7 +266,7 @@ class ExportFormat extends CSVPluginGenerator
                             continue;
                         }
 
-                        if($this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')) === '' || !$this->elasticExportCoreHelper->getBarcodeByType($variation, $settings->get('barcode')))
+                        if($this->elasticExportHelper->getBarcodeByType($variation, $settings->get('barcode')) === '' || !$this->elasticExportHelper->getBarcodeByType($variation, $settings->get('barcode')))
                             continue;
 
                         try {
