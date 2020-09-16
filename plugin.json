@@ -23,7 +23,7 @@
   ],
   "author": "plentymarkets GmbH",
   "authorIcon": "icon_author_xs.png",
-  "serviceProvider": "PluginExportFormatTutorial2\\ExportFormatServiceProvider",
+  "serviceProvider": "PluginExportFormatTutorial2\\ExportFormat2ServiceProvider",
   "keywords": [
     "plugin",
     "export",
