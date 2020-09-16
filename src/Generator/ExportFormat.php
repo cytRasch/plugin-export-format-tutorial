@@ -311,6 +311,11 @@ class ExportFormat extends CSVPluginGenerator
     private function buildRow( $variation, $settings )
     {
 
+        $allowedVariation = [
+            '28',
+            '29',
+        ];
+
         $variationAttributes = $this->attributeHelper->getVariationAttributes($variation, $settings);
 
         $data = [
@@ -320,7 +325,8 @@ class ExportFormat extends CSVPluginGenerator
             'stock'        => $this->elasticExportStockHelper->getStock($variation)
         ];
 
-        $this->addCSVContent(array_values($data));
+        if(in_array(substr($data['title'], 0, 2), $allowedVariation))
+            $this->addCSVContent(array_values($data));
     }
 
     /**
