@@ -3,7 +3,7 @@
 namespace PluginExportFormatTutorial2\Helper;
 
 use ElasticExport\Helper\ElasticExportPropertyHelper;
-use PluginExportFormatTutorial2\Generator\ExportFormat;
+use PluginExportFormatTutorial2\Generator\ExportFormat2;
 use Plenty\Modules\Helper\Models\KeyValue;
 use Plenty\Modules\Item\Attribute\Contracts\AttributeRepositoryContract;
 use Plenty\Modules\Item\Attribute\Contracts\AttributeValueNameRepositoryContract;
@@ -101,7 +101,7 @@ class AttributeHelper
 
         foreach ($typeList as $type)
         {
-            $property = $this->elasticExportPropertyHelper->getProperty($variation, $type, ExportFormat::GOOGLE_SHOPPING, $settings->get('lang'));
+            $property = $this->elasticExportPropertyHelper->getProperty($variation, $type, ExportFormat2::GOOGLE_SHOPPING, $settings->get('lang'));
 
             if (strlen(trim($property)) > 0)
             {

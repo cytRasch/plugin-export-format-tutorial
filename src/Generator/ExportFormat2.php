@@ -30,7 +30,7 @@ use PluginExportFormatTutorial2\Helper\ImageHelper;
  *
  * @package PluginExportFormatTutorial2\Generator
  */
-class ExportFormat extends CSVPluginGenerator
+class ExportFormat2 extends CSVPluginGenerator
 {
 
     use Loggable;
