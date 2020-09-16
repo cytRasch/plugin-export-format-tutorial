@@ -1,6 +1,6 @@
 <?php
 
-namespace PluginExportFormatTutorial\Generator;
+namespace PluginExportFormatTutorial2\Generator;
 
 
 use ElasticExport\Helper\ElasticExportItemHelper;
@@ -9,8 +9,8 @@ use ElasticExport\Helper\ElasticExportPropertyHelper;
 use ElasticExport\Helper\ElasticExportStockHelper;
 use ElasticExport\Services\FiltrationService;
 use ElasticExport\Services\PriceDetectionService;
-use PluginExportFormatTutorial\Helper\AttributeHelper;
-use PluginExportFormatTutorial\Helper\PriceHelper;
+use PluginExportFormatTutorial2\Helper\AttributeHelper;
+use PluginExportFormatTutorial2\Helper\PriceHelper;
 use Plenty\Legacy\Services\Item\Variation\DetectSalesPriceService;
 use Plenty\Modules\DataExchange\Contracts\CSVPluginGenerator;
 use Plenty\Modules\Helper\Services\ArrayHelper;
@@ -22,13 +22,13 @@ use Plenty\Modules\Item\Variation\Services\ExportPreloadValue\ExportPreloadValue
 use Plenty\Modules\Order\Currency\Contracts\CurrencyRepositoryContract;
 use Plenty\Modules\Order\Currency\Models\Currency;
 use Plenty\Plugin\Log\Loggable;
-use PluginExportFormatTutorial\Helper\ImageHelper;
+use PluginExportFormatTutorial2\Helper\ImageHelper;
 
 
 /**
  * Class GoogleShopping
  *
- * @package PluginExportFormatTutorial\Generator
+ * @package PluginExportFormatTutorial2\Generator
  */
 class ExportFormat extends CSVPluginGenerator
 {
@@ -227,7 +227,7 @@ class ExportFormat extends CSVPluginGenerator
                 if ( count($resultList['error']) > 0 ) {
                     $this->getLogger(__METHOD__)
                         ->addReference('failedShard', $shardIterator)
-                        ->error('PluginExportFormatTutorial::log.esError', [
+                        ->error('PluginExportFormatTutorial2::log.esError', [
                             'Error message' => $resultList['error'],
                         ]);
                 }
@@ -235,7 +235,7 @@ class ExportFormat extends CSVPluginGenerator
                 if ( $shardIterator == 1 ) {
                     $this->getLogger(__METHOD__)
                         ->addReference('total', (int) $resultList['total'])
-                        ->debug('PluginExportFormatTutorial::logs.esResultAmount');
+                        ->debug('PluginExportFormatTutorial2::logs.esResultAmount');
                 }
 
                 $this->variationExportService->addPreloadTypes([
@@ -281,7 +281,7 @@ class ExportFormat extends CSVPluginGenerator
                             $this->errorIterator++;
 
                             if ( $this->errorIterator == 100 ) {
-                                $this->getLogger(__METHOD__)->error('PluginExportFormatTutorial::logs.fillRowError', [
+                                $this->getLogger(__METHOD__)->error('PluginExportFormatTutorial2::logs.fillRowError', [
                                     'error list' => $this->errorBatch['rowError']
                                 ]);
 
@@ -294,7 +294,7 @@ class ExportFormat extends CSVPluginGenerator
             } while ( $elasticSearch->hasNext() );
 
             if ( is_array($this->errorBatch) && count($this->errorBatch['rowError']) ) {
-                $this->getLogger(__METHOD__)->error('PluginExportFormatTutorial::logs.fillRowError', [
+                $this->getLogger(__METHOD__)->error('PluginExportFormatTutorial2::logs.fillRowError', [
                     'errorList' => $this->errorBatch['rowError']
                 ]);
 

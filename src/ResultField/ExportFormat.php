@@ -1,6 +1,6 @@
 <?php
 
-namespace PluginExportFormatTutorial\ResultField;
+namespace PluginExportFormatTutorial2\ResultField;
 
 use Plenty\Modules\DataExchange\Contracts\ResultFields;
 use Plenty\Modules\DataExchange\Models\FormatSetting;

@@ -1,6 +1,6 @@
 <?php
 
-namespace PluginExportFormatTutorial\Helper;
+namespace PluginExportFormatTutorial2\Helper;
 
 class UnitHelper
 {

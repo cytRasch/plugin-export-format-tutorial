@@ -1,6 +1,6 @@
 <?php
 
-namespace PluginExportFormatTutorial\Helper;
+namespace PluginExportFormatTutorial2\Helper;
 
 use Plenty\Legacy\Repositories\Item\SalesPrice\SalesPriceSearchRepository;
 use Plenty\Modules\Helper\Models\KeyValue;

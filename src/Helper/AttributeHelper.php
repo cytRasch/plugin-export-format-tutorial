@@ -1,9 +1,9 @@
 <?php
 
-namespace PluginExportFormatTutorial\Helper;
+namespace PluginExportFormatTutorial2\Helper;
 
 use ElasticExport\Helper\ElasticExportPropertyHelper;
-use PluginExportFormatTutorial\Generator\ExportFormat;
+use PluginExportFormatTutorial2\Generator\ExportFormat;
 use Plenty\Modules\Helper\Models\KeyValue;
 use Plenty\Modules\Item\Attribute\Contracts\AttributeRepositoryContract;
 use Plenty\Modules\Item\Attribute\Contracts\AttributeValueNameRepositoryContract;
