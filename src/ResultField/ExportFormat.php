@@ -14,7 +14,7 @@ use Plenty\Modules\Item\Search\Mutators\DefaultCategoryMutator;
 use Plenty\Modules\Item\Search\Mutators\ImageDomainMutator;
 use Plenty\Modules\Cloud\ElasticSearch\Lib\ElasticSearch;
 
-class ExportFormat extends ResultFields
+class ExportFormat2 extends ResultFields
 {
     const GOOGLE_SHOPPING = 7.00;
 
